@@ -2,51 +2,83 @@ import Link from "next/link";
 import { CATEGORIES } from "@/lib/constants";
 import { getOpportunities, getPosts } from "@/lib/data";
 import NewsletterForm from "@/components/NewsletterForm";
-import LogoMarquee from "@/components/LogoMarquee";
 import OpportunityDirectory from "@/components/OpportunityDirectory";
+import CompanyLogo from "@/components/CompanyLogo";
 import { formatDate } from "@/lib/utils";
 
 export const revalidate = 3600;
+
+const HERO_IMG =
+  "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1920&q=70";
 
 export default async function HomePage() {
   const [opportunities, posts] = await Promise.all([getOpportunities(), getPosts()]);
   const latestPost = posts[0];
 
+  // Logos para a prova social do hero (empresas distintas com domínio)
+  const heroLogos = (() => {
+    const seen = new Set<string>();
+    const out: typeof opportunities = [];
+    for (const o of opportunities) {
+      if (!o.company_domain || seen.has(o.company_domain)) continue;
+      seen.add(o.company_domain);
+      out.push(o);
+      if (out.length >= 7) break;
+    }
+    return out;
+  })();
+
   return (
     <>
       {/* HERO */}
       <section className="relative overflow-hidden bg-ink">
+        {/* Foto de fundo escurecida */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 opacity-50"
+          className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-25"
+          style={{ backgroundImage: `url('${HERO_IMG}')` }}
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
           style={{
             backgroundImage:
-              "radial-gradient(60rem 30rem at 85% -10%, rgba(53,86,224,.45), transparent 60%), radial-gradient(40rem 24rem at 0% 110%, rgba(16,185,129,.25), transparent 60%)",
+              "radial-gradient(70rem 36rem at 50% -10%, rgba(124,58,237,.45), transparent 60%), linear-gradient(180deg, rgba(15,23,42,.65), rgba(15,23,42,.92))",
           }}
         />
-        <div className="relative mx-auto max-w-site px-4 py-20 sm:px-6 sm:py-28">
-          <p className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 text-sm font-medium text-emerald-300 ring-1 ring-white/15">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" aria-hidden />
-            Mais de R$ 5 milhões em créditos e benefícios disponíveis
+        <div className="relative mx-auto max-w-site px-4 py-20 text-center sm:px-6 sm:py-28">
+          <p className="inline-flex items-center gap-2 rounded-full bg-white/[0.06] px-4 py-1.5 text-sm font-medium text-slate-200 ring-1 ring-white/15">
+            Mais de R$ 5.000.000 em créditos e benefícios disponíveis
           </p>
-          <h1 className="mt-6 max-w-3xl text-4xl font-extrabold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-6xl">
-            Descubra créditos, benefícios e oportunidades para startups brasileiras
+          <h1 className="mx-auto mt-7 max-w-4xl text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-[3.75rem]">
+            Descubra créditos de IA e Cloud para a sua Startup
           </h1>
-          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-slate-300">
-            Mais de R$ 5 milhões em créditos, programas e benefícios para fundadores de
-            startups e SaaS — de AWS e Google Cloud a FAPESP, Finep e Sebrae. Compare tudo
-            lado a lado e aplique com confiança.
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-300">
+            O melhor amigo do fundador. A newsletter mensal e o diretório gratuito de
+            créditos e benefícios para startups — da OpenAI e Anthropic à Stripe e Zendesk.
+            Compare mais de R$ 5 milhões em ofertas lado a lado e monte seu stack com confiança.
           </p>
-          <div className="mt-8 max-w-xl">
-            <NewsletterForm variant="hero" source="hero" />
+          <div className="mt-9">
+            <NewsletterForm variant="spotlight" source="hero" />
           </div>
-        </div>
-        <div className="relative border-t border-white/10 bg-white/[0.03] py-4">
-          <p className="mb-1 text-center text-xs font-medium uppercase tracking-widest text-slate-400">
-            Oportunidades de empresas como
-          </p>
-          <div className="invert-0 [&_img]:bg-transparent [&_img]:ring-0 [&_span]:text-slate-300">
-            <LogoMarquee opportunities={opportunities} />
+
+          {/* Prova social */}
+          <div className="mt-10 flex flex-col items-center gap-4">
+            <div className="flex items-center -space-x-2">
+              {heroLogos.map((o) => (
+                <CompanyLogo
+                  key={o.company_domain}
+                  domain={o.company_domain}
+                  company={o.company}
+                  size={40}
+                  className="h-10 w-10 rounded-full ring-2 ring-ink"
+                />
+              ))}
+            </div>
+            <p className="text-sm text-slate-400">
+              Junte-se a <span className="font-semibold text-white">1.500+</span> fundadores
+              na frente em créditos &amp; benefícios
+            </p>
           </div>
         </div>
       </section>
@@ -88,7 +120,7 @@ export default async function HomePage() {
       </section>
 
       {/* DIRETÓRIO */}
-      <section className="border-t border-slate-100 bg-slate-50/60 dark:border-slate-800 dark:bg-slate-950">
+      <section id="diretorio" className="scroll-mt-20 border-t border-slate-100 bg-slate-50/60 dark:border-slate-800 dark:bg-slate-950">
         <div className="mx-auto max-w-site px-4 py-14 sm:px-6">
           <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
             Todas as oportunidades
