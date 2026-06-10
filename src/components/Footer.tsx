@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CATEGORIES, SITE } from "@/lib/constants";
 import NewsletterForm from "./NewsletterForm";
+import Logo from "./Logo";
 
 const GUIDES = [
   { slug: "como-conseguir-creditos-aws-startup-brasileira", label: "Guia de créditos AWS" },
@@ -15,13 +16,8 @@ export default function Footer() {
       <div className="mx-auto max-w-site px-4 py-14 sm:px-6">
         <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <Link href="/" className="flex items-center gap-2.5">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600 text-sm font-black text-white">
-                C$
-              </span>
-              <span className="text-[15px] font-bold tracking-tight">
-                Crédito <span className="text-brand-600">para Startups</span>
-              </span>
+            <Link href="/">
+              <Logo />
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-ink-mute dark:text-slate-400">
               O diretório gratuito de créditos, programas, aceleradoras, editais e benefícios

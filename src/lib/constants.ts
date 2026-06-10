@@ -1,6 +1,6 @@
 export const SITE = {
-  name: "Crédito para Startups",
-  shortName: "CréditoPS",
+  name: "Creditas",
+  shortName: "Creditas",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://www.creditoparastartups.com.br",
   description:
     "Diretório gratuito com mais de R$ 5 milhões em créditos de cloud e IA, programas, aceleradoras, editais e benefícios para startups brasileiras. Compare e aplique.",

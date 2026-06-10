@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import CommandSearch from "./CommandSearch";
+import Logo from "./Logo";
 import type { Opportunity } from "@/types";
 import { cn } from "@/lib/utils";
 
@@ -46,19 +47,6 @@ const MENU: Menu[] = [
 
 const LINKS = [{ label: "Recursos", href: "/blog" }];
 
-function Logo() {
-  return (
-    <span className="flex items-center gap-2.5">
-      <svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-hidden className="shrink-0">
-        <circle cx="12" cy="11.5" r="6.5" fill="#a78bfa" />
-        <circle cx="20" cy="11.5" r="6.5" fill="#7c3aed" fillOpacity="0.92" />
-        <circle cx="16" cy="20.5" r="6.5" fill="#8b5cf6" fillOpacity="0.92" />
-      </svg>
-      <span className="text-[17px] font-extrabold tracking-tight text-ink">Creditas</span>
-    </span>
-  );
-}
-
 export default function Header({ opportunities }: { opportunities: Opportunity[] }) {
   const [open, setOpen] = useState(false);
 
@@ -66,7 +54,7 @@ export default function Header({ opportunities }: { opportunities: Opportunity[]
     opportunities.filter((o) => o.category === slug || o.tags.includes(slug)).length;
 
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-200/80 bg-white/90 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-white/10 bg-ink/80 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-site items-center gap-3 px-4 sm:px-6">
         <Link href="/" onClick={() => setOpen(false)}>
           <Logo />
@@ -76,32 +64,32 @@ export default function Header({ opportunities }: { opportunities: Opportunity[]
         <nav className="ml-3 hidden items-center lg:flex" aria-label="Principal">
           {MENU.map((menu) => (
             <div key={menu.label} className="group relative">
-              <button className="flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-ink-soft transition group-hover:text-brand-600">
+              <button className="flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-slate-300 transition group-hover:text-white">
                 {menu.label}
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="mt-0.5 opacity-60" aria-hidden>
                   <path d="m6 9 6 6 6-6" />
                 </svg>
               </button>
               <div className="invisible absolute left-0 top-full pt-2 opacity-0 transition group-hover:visible group-hover:opacity-100">
-                <div className="w-80 rounded-2xl border border-slate-200 bg-white p-2 shadow-xl ring-1 ring-black/5">
+                <div className="w-80 rounded-2xl border border-white/10 bg-slate-900 p-2 shadow-2xl ring-1 ring-black/40">
                   {menu.items.map((item) => (
                     <Link
                       key={item.slug + item.label}
                       href={`/${item.slug}`}
-                      className="flex items-start gap-3 rounded-xl px-3 py-2.5 transition hover:bg-brand-50"
+                      className="flex items-start gap-3 rounded-xl px-3 py-2.5 transition hover:bg-white/5"
                     >
                       <span className="min-w-0 flex-1">
-                        <span className="block text-sm font-semibold text-ink">{item.label}</span>
-                        <span className="block truncate text-xs text-ink-mute">{item.desc}</span>
+                        <span className="block text-sm font-semibold text-white">{item.label}</span>
+                        <span className="block truncate text-xs text-slate-400">{item.desc}</span>
                       </span>
-                      <span className="mt-0.5 shrink-0 rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-semibold text-ink-mute">
+                      <span className="mt-0.5 shrink-0 rounded-full bg-white/10 px-2 py-0.5 text-[11px] font-semibold text-slate-300">
                         {count(item.slug)}
                       </span>
                     </Link>
                   ))}
                   <Link
                     href={`/${menu.browse.slug}`}
-                    className="mt-1 block rounded-xl px-3 py-2.5 text-sm font-semibold text-brand-600 transition hover:bg-brand-50"
+                    className="mt-1 block rounded-xl px-3 py-2.5 text-sm font-semibold text-brand-300 transition hover:bg-white/5"
                   >
                     {menu.browse.label} →
                   </Link>
@@ -113,14 +101,14 @@ export default function Header({ opportunities }: { opportunities: Opportunity[]
             <Link
               key={l.href}
               href={l.href}
-              className="rounded-lg px-3 py-2 text-sm font-medium text-ink-soft transition hover:text-brand-600"
+              className="rounded-lg px-3 py-2 text-sm font-medium text-slate-300 transition hover:text-white"
             >
               {l.label}
             </Link>
           ))}
           <Link
             href="/#diretorio"
-            className="rounded-lg px-3 py-2 text-sm font-semibold text-brand-600 transition hover:text-brand-700"
+            className="rounded-lg px-3 py-2 text-sm font-semibold text-brand-300 transition hover:text-brand-200"
           >
             Anunciar
           </Link>
@@ -130,12 +118,12 @@ export default function Header({ opportunities }: { opportunities: Opportunity[]
           <CommandSearch opportunities={opportunities} />
           <Link
             href="/#diretorio"
-            className="hidden rounded-lg bg-brand-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-700 sm:block"
+            className="hidden rounded-lg bg-gradient-to-b from-brand-500 to-brand-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-brand-600/30 transition hover:from-brand-400 hover:to-brand-500 sm:block"
           >
             Ver diretório
           </Link>
           <button
-            className="flex h-9 w-9 items-center justify-center rounded-lg ring-1 ring-slate-200 lg:hidden"
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-white ring-1 ring-white/15 lg:hidden"
             onClick={() => setOpen((v) => !v)}
             aria-label={open ? "Fechar menu" : "Abrir menu"}
             aria-expanded={open}
@@ -146,17 +134,17 @@ export default function Header({ opportunities }: { opportunities: Opportunity[]
       </div>
 
       {/* Menu mobile */}
-      <div className={cn("border-t border-slate-200 lg:hidden", open ? "block" : "hidden")}>
+      <div className={cn("border-t border-white/10 lg:hidden", open ? "block" : "hidden")}>
         <nav className="mx-auto grid max-w-site gap-1 px-4 py-3" aria-label="Menu mobile">
           {MENU.flatMap((m) => m.items).map((item) => (
             <Link
               key={item.slug + item.label}
               href={`/${item.slug}`}
               onClick={() => setOpen(false)}
-              className="flex items-center justify-between rounded-lg px-3 py-2.5 text-[15px] font-medium text-ink-soft hover:bg-slate-100"
+              className="flex items-center justify-between rounded-lg px-3 py-2.5 text-[15px] font-medium text-slate-300 hover:bg-white/5"
             >
               {item.label}
-              <span className="rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-semibold text-ink-mute">
+              <span className="rounded-full bg-white/10 px-2 py-0.5 text-[11px] font-semibold text-slate-300">
                 {count(item.slug)}
               </span>
             </Link>
@@ -164,7 +152,7 @@ export default function Header({ opportunities }: { opportunities: Opportunity[]
           <Link
             href="/blog"
             onClick={() => setOpen(false)}
-            className="rounded-lg px-3 py-2.5 text-[15px] font-medium text-ink-soft hover:bg-slate-100"
+            className="rounded-lg px-3 py-2.5 text-[15px] font-medium text-slate-300 hover:bg-white/5"
           >
             Recursos
           </Link>

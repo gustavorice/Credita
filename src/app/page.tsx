@@ -1,9 +1,8 @@
 import Link from "next/link";
-import { CATEGORIES } from "@/lib/constants";
+import { CATEGORIES, logoUrl } from "@/lib/constants";
 import { getOpportunities, getPosts } from "@/lib/data";
 import NewsletterForm from "@/components/NewsletterForm";
 import OpportunityDirectory from "@/components/OpportunityDirectory";
-import CompanyLogo from "@/components/CompanyLogo";
 import { formatDate } from "@/lib/utils";
 
 export const revalidate = 3600;
@@ -64,15 +63,22 @@ export default async function HomePage() {
 
           {/* Prova social */}
           <div className="mt-10 flex flex-col items-center gap-4">
-            <div className="flex items-center -space-x-2">
+            <div className="flex flex-wrap items-center justify-center gap-2.5">
               {heroLogos.map((o) => (
-                <CompanyLogo
+                <span
                   key={o.company_domain}
-                  domain={o.company_domain}
-                  company={o.company}
-                  size={40}
-                  className="h-10 w-10 rounded-full ring-2 ring-ink"
-                />
+                  className="flex h-8 w-8 items-center justify-center rounded-full bg-white ring-2 ring-ink"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={logoUrl(o.company_domain, o.company)}
+                    alt={`Logo ${o.company}`}
+                    width={18}
+                    height={18}
+                    loading="lazy"
+                    className="h-[18px] w-[18px] object-contain"
+                  />
+                </span>
               ))}
             </div>
             <p className="text-sm text-slate-400">
