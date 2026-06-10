@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-white text-ink antialiased;
+}
+
+html.dark body {
+  @apply bg-slate-950 text-slate-100;
+}
+
+/* Tipografia do blog */
+.prose-article {
+  @apply text-[1.05rem] leading-relaxed text-ink-soft;
+}
+.prose-article h2 {
+  @apply mt-10 mb-4 text-2xl font-bold tracking-tight text-ink;
+}
+.prose-article h3 {
+  @apply mt-8 mb-3 text-xl font-semibold text-ink;
+}
+.prose-article p {
+  @apply my-4;
+}
+.prose-article ul {
+  @apply my-4 list-disc space-y-2 pl-6;
+}
+.prose-article ol {
+  @apply my-4 list-decimal space-y-2 pl-6;
+}
+.prose-article a {
+  @apply font-medium text-brand-600 underline underline-offset-2 hover:text-brand-700;
+}
+.prose-article blockquote {
+  @apply my-6 border-l-4 border-brand-500 bg-brand-50 px-5 py-3 font-medium text-ink;
+}
+.prose-article code {
+  @apply rounded bg-slate-100 px-1.5 py-0.5 text-[0.9em] text-ink;
+}
+.prose-article strong {
+  @apply font-semibold text-ink;
+}
+
+html.dark .prose-article { @apply text-slate-300; }
+html.dark .prose-article h2,
+html.dark .prose-article h3,
+html.dark .prose-article strong { @apply text-white; }
+html.dark .prose-article blockquote { @apply border-brand-500 bg-slate-900 text-slate-100; }
+html.dark .prose-article code { @apply bg-slate-800 text-slate-100; }
+
+/* Scrollbar discreta para o menu de filtros */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee { animation: none; }
+}
