@@ -5,3 +5,4 @@ para startups brasileiras — inspirado no creditforstartups.com, 100% em portug
 
 **Stack:** Next.js 15 · TypeScript · Tailwind CSS · Supabase (PostgreSQL + Auth) · Resend · Vercel
 
+https://creditasbrasil.com/
